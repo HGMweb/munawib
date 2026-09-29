@@ -155,6 +155,29 @@ table.data tr.off td{opacity:.5}
 .role{font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:6px;white-space:nowrap}
 .role.ph{background:var(--we-soft);color:var(--we)} .role.tech{background:var(--wd-soft);color:var(--wd)} .role.dr{background:var(--comp-soft);color:var(--comp)}
 
+/* simple home */
+.actgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+@media (max-width:600px){.actgrid{grid-template-columns:1fr 1fr}.action{padding:12px;font-size:.92rem}.action small{display:none}}
+.action{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:right;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-weight:600;font-size:1rem}
+.action:hover{border-color:var(--accent);background:var(--accent-soft)}
+.action.main{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.action.main small{color:var(--on-accent);opacity:.85}
+.action svg{width:22px;height:22px;margin-bottom:4px}
+.action small{font-weight:400;font-size:.8rem;color:var(--muted)}
+.state{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem;padding:4px 12px;border-radius:999px}
+.state.ok{background:var(--accent-soft);color:var(--accent)} .state.bad{background:var(--danger-soft);color:var(--danger)}
+.alert{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-radius:12px;background:var(--danger-soft)}
+.alert.warn{background:var(--ot-soft)}
+details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+details.more summary{cursor:pointer;font-weight:600;font-family:var(--f-disp)}
+details.more[open] summary{margin-bottom:12px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:10px;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.hint{margin:0;font-size:.85rem;color:var(--muted);background:var(--surface-2);padding:8px 12px;border-radius:8px}
+.gear{border:1px solid var(--line);background:var(--surface);width:40px;height:40px;border-radius:10px;display:grid;place-items:center}
+.gear svg{width:20px;height:20px}
+.gear[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
 /* modal */
 #modal{position:fixed;inset:0;background:rgba(8,20,22,.45);display:grid;place-items:center;padding:16px;z-index:50}
 #modal .box{background:var(--surface);color:var(--ink);border-radius:16px;width:min(620px,100%);max-height:88vh;overflow:auto;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
@@ -177,15 +200,14 @@ table.data tr.off td{opacity:.5}
     <div class="brand"><div class="mark">م</div><div><h1>مناوب</h1><small>جداول الخفارات والعمل الإضافي لقسم الصيدلة</small></div></div>
     <div class="spacer"></div>
     <span id="status" class="status">جارٍ التحميل…</span>
+    <button class="gear" id="gearBtn" data-tab="settings" aria-label="الإعدادات" title="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <div class="monthpick"><button id="mPrev" aria-label="الشهر السابق">›</button><strong id="mLabel"></strong><button id="mNext" aria-label="الشهر التالي">‹</button></div>
   </header>
   <nav class="tabs" role="tablist" id="tabs">
-    <button data-tab="dash" role="tab">لوحة التحكم</button>
-    <button data-tab="sched" role="tab">الجداول</button>
+    <button data-tab="dash" role="tab">الرئيسية</button>
+    <button data-tab="sched" role="tab">الجدول</button>
+    <button data-tab="req" role="tab">الطلبات</button>
     <button data-tab="staff" role="tab">الموظفون</button>
-    <button data-tab="leaves" role="tab">الإجازات والطوارئ</button>
-    <button data-tab="prefs" role="tab">الرغبات والتثبيت</button>
-    <button data-tab="settings" role="tab">الإعدادات</button>
   </nav>
   <div id="banner"></div>
   <main id="main"></main>
@@ -217,7 +239,7 @@ const todayStr=()=>new Date().toISOString().slice(0,10);
 
 const DEMO=true;
 /* ============ state ============ */
-const S={staff:[],config:null,leaves:[],prefs:[],months:{},month:null,sample:true,canEdit:true,tab:'dash',sub:'we',hl:'',dayPick:null,staffQ:'',staffRole:''};
+const S={reqType:'sick',staff:[],config:null,leaves:[],prefs:[],months:{},month:null,sample:true,canEdit:true,tab:'dash',sub:'we',hl:'',dayPick:null,staffQ:'',staffRole:''};
 const P={mode:'memory',db:null,q:{},unsub:{}};
 const R=()=>S.config.rules;
 const staffById=id=>S.staff.find(p=>p.id===id);
@@ -472,7 +494,7 @@ function save(...which){
   setStatus();renderBanner();
 }
 function setStatus(k){
-  const el=$('#status');
+  const el=$('#status');el.hidden=DEMO;
   if(k==='saving'){el.className='status';el.textContent='جارٍ الحفظ…';return}
   if(S.sample){el.className='status sample';el.textContent='بيانات تجريبية';return}
   if(P.mode==='db'){el.className='status ok';el.textContent=S.canEdit?'محفوظ ومشترك':'عرض فقط';return}
@@ -501,7 +523,8 @@ async function boot(){
   S.config=defaultConfig();S.month=shiftMonth(todayStr().slice(0,7),1);
   S.staff=sampleStaff();S.leaves=sampleLeaves(S.month);S.prefs=samplePrefs(S.month);generate(S.month);S.months[S.month].log=[{t:new Date().toISOString(),x:'جدول تجريبي مولَّد من بيانات أمثلة'}];
   try{S.tab=localStorage.getItem('munawib:tab')||S.tab}catch(e){}
-  const h=location.hash.slice(1);if(['dash','sched','staff','leaves','prefs','settings'].includes(h))S.tab=h;
+  if(S.tab==='leaves'||S.tab==='prefs')S.tab='req';
+  const h=location.hash.slice(1);if(['dash','sched','staff','req','settings'].includes(h))S.tab=h;
   render();
   if(!(window.claude&&window.claude.use)){loadLocal();return}
   let db=null,user=null;
@@ -557,18 +580,19 @@ function confirmBox(title,text,okLabel,onOk,danger){
 function render(){
   $('#mLabel').textContent=mLabel(S.month);
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===S.tab));
+  $('#gearBtn').setAttribute('aria-pressed',S.tab==='settings');
   setStatus();renderBanner();
-  const f={dash:renderDash,sched:renderSched,staff:renderStaff,leaves:renderLeaves,prefs:renderPrefs,settings:renderSettings}[S.tab]||renderDash;
+  const f={dash:renderDash,sched:renderSched,staff:renderStaff,req:renderRequests,settings:renderSettings}[S.tab]||renderDash;
   $('#main').innerHTML=f();
-  if(S.tab==='prefs')prefUi();
+  if(S.tab==='req'&&S.reqType==='pin')prefUi();
   if(S.tab==='sched'){const q=$('#hlq');if(q&&document.activeElement!==q&&S._focusHl){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
 }
 function renderBanner(){
   const b=$('#banner');
-  if(DEMO){b.innerHTML=`<div class="banner" style="background:var(--wd-soft)"><div><b style="color:var(--wd)">نسخة عرض للمراجعة.</b> البيانات أسماء وهمية (${S.staff.length} موظفاً) والجدول مولَّد تلقائياً. جرّب كل شيء بحرية: توليد الجدول، تسجيل مرضي بالضغط على أي اسم، التثبيت، الإعدادات. تعديلاتك تبقى على جهازك فقط ولا تؤثر على أحد.</div></div>`;return}
+  if(DEMO){b.innerHTML=`<div class="banner" style="background:var(--wd-soft)"><div><b style="color:var(--wd)">نسخة تجريبية.</b> الأسماء وهمية، وجرّب براحتك: تعديلاتك تبقى على جهازك فقط.</div></div>`;return}
   if(!S.sample){b.innerHTML='';return}
   b.innerHTML=S.canEdit
-    ?`<div class="banner"><div><b>أنت تشاهد بيانات تجريبية.</b> ${S.staff.length} موظفاً بأسماء وهمية وجدول مولَّد تلقائياً لتجربة النظام. أول تعديل تحفظه يعتمدها كبداية، أو ابدأ بقائمة فارغة وأضف موظفيك.</div><div class="spacer"></div><button class="btn small" data-act="keepSample">اعتماد البيانات التجريبية</button><button class="btn small" data-act="startEmpty">البدء بقائمة فارغة</button></div>`
+    ?`<div class="banner"><div><b>بيانات تجريبية بأسماء وهمية.</b> أضف موظفيك لتبدأ، أو اعتمد التجربة.</div><div class="spacer"></div><button class="btn small" data-act="keepSample">اعتماد البيانات التجريبية</button><button class="btn small" data-act="startEmpty">البدء بقائمة فارغة</button></div>`
     :`<div class="banner"><div><b>بيانات تجريبية.</b> لم يُدخل المسؤول بيانات القسم بعد.</div></div>`;
 }
 function monthStats(){
@@ -580,45 +604,38 @@ function monthStats(){
   return{need,filled,vac,ix,pin:m.asg.filter(a=>a.f==='pin').length,warn:m.asg.filter(a=>a.w).length,rep:m.asg.filter(a=>a.f==='rep').length,comp:m.asg.filter(a=>a.f==='comp').length};
 }
 function renderDash(){
-  const m=curMonth(),st=monthStats();
-  const leavesM=S.leaves.filter(l=>l.to>=S.month+'-01'&&l.from<=S.month+'-31');
-  const active=S.staff.filter(p=>p.active);
-  let html=`<div class="stack"><div class="hero"><div><h2>جدول ${mLabel(S.month)}</h2><div class="muted">${m&&m.generatedAt?`آخر توليد: ${new Date(m.generatedAt).toLocaleString('ar-KW',{dateStyle:'medium',timeStyle:'short'})}`:'لم يُولَّد جدول هذا الشهر بعد'}</div></div>
-  <div class="row">${S.canEdit?`<button class="btn primary" data-act="gen">${m?'إعادة توليد الجدول':'توليد جدول الشهر'}</button>`:''}<button class="btn" data-act="goto" data-tab="sched">عرض الجداول</button></div></div>`;
-  if(!m){return html+`<div class="panel empty"><h3>لا يوجد جدول لهذا الشهر</h3><p>أدخل إجازات الشهر أولاً من تبويب «الإجازات والطوارئ»، ثم اضغط «توليد جدول الشهر». يوزّع النظام ${active.length} موظفاً على الخفارات والإضافي في ثوانٍ مع مراعاة الإجازات والراحة والعدالة.</p></div></div>`}
-  const pend=(m.pending||[]);
-  html+=`<div class="kpis">
-    <div class="kpi good"><div class="v">${st.filled}<span class="muted" style="font-size:.9rem"> / ${st.need}</span></div><div class="l">مقعد مغطى في الجداول الثلاثة</div></div>
-    <div class="kpi ${st.vac.length?'bad':''}"><div class="v">${st.vac.reduce((s,v)=>s+v.n,0)}</div><div class="l">مقعد شاغر</div></div>
-    <div class="kpi ${st.warn?'warn':''}"><div class="v">${st.warn}</div><div class="l">تجاوز لقاعدة الراحة</div></div>
-    <div class="kpi"><div class="v">${st.pin}</div><div class="l">مقعد مثبّت حسب رغبة الموظف</div></div>
-    <div class="kpi"><div class="v">${st.rep}</div><div class="l">استبدال بسبب إجازة أو طارئ</div></div>
-    <div class="kpi ${pend.length?'warn':''}"><div class="v">${pend.length}</div><div class="l">تعويض معلّق</div></div>
-    <div class="kpi"><div class="v">${active.length}</div><div class="l">موظف فعّال · ${leavesM.length} إجازة هذا الشهر</div></div>
+  const m=curMonth(),st=monthStats(),days=monthDays(S.month);
+  const I={gen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M9 15l2 2 4-4"/></svg>',sick:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.4-9.3-9A5 5 0 0 1 12 6a5 5 0 0 1 9.3 6c-2.3 4.6-9.3 9-9.3 9z"/><path d="M12 10v5M9.5 12.5h5"/></svg>',leave:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg>',pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>'};
+  let html=`<div class="stack"><div class="hero"><div><h2>جدول ${mLabel(S.month)}</h2></div>`;
+  if(m){const vacN=st.vac.reduce((s,v)=>s+v.n,0);
+    html+=vacN?`<span class="state bad">ناقص ${vacN} مقعد</span>`:`<span class="state ok">✓ الجدول مكتمل</span>`}
+  html+=`</div>`;
+  if(S.canEdit)html+=`<div class="actgrid">
+    <button class="action main" data-act="gen">${I.gen}${m?'أعد توليد الجدول':'ولّد جدول الشهر'}<small>يوزّع الموظفين تلقائياً في ثوانٍ</small></button>
+    <button class="action" data-act="goReq" data-type="sick">${I.sick}موظف مريض أو غائب<small>يحط بديل ويعوّضه بخفارة ثانية</small></button>
+    <button class="action" data-act="goReq" data-type="annual">${I.leave}إجازة موظف<small>ما ينحط في الجدول بفترة إجازته</small></button>
+    <button class="action" data-act="goReq" data-type="pin">${I.pin}رغبة موظف<small>ثبّته في صيدلية أو وقت يبيه</small></button>
   </div>`;
-  // fairness
-  const fair=role=>{const ps=active.filter(p=>role==='tech'?p.role==='tech':p.role!=='tech');const d=ps.map(p=>({p,s:stOf(st.ix,p.id)}));if(!d.length)return'';
-    const du=d.map(x=>x.s.duty),we=d.map(x=>x.s.we),ot=d.filter(x=>x.p.ot).map(x=>x.s.ot),hr=d.map(x=>x.s.hrs),full=d.filter(x=>x.s.hrs+4>capOf(x.p)).length;
-    const f=a=>a.length?`${Math.min(...a)}–${Math.max(...a)}`:'—',avg=a=>a.length?(a.reduce((s,x)=>s+x,0)/a.length).toFixed(1):'—';
-    return `<div><h3 style="margin-bottom:8px">${role==='tech'?'الفنيون':'الصيادلة'} <span class="muted" style="font-weight:400;font-size:.85rem">(${ps.length})</span></h3><div class="fair">
-      <div><span class="muted">ساعات الخفارة للفرد</span><br><b>${f(hr)}</b> <span class="muted">من ${R().maxHours} · متوسط ${avg(hr)}</span></div>
-      <div><span class="muted">خفارات للفرد</span><br><b>${f(du)}</b> <span class="muted">متوسط ${avg(du)}</span></div>
-      <div><span class="muted">منها نهاية أسبوع</span><br><b>${f(we)}</b> <span class="muted">متوسط ${avg(we)}</span></div>
-      <div><span class="muted">إضافي للفرد</span><br><b>${f(ot)}</b> <span class="muted">متوسط ${avg(ot)}</span></div></div></div>`};
-  const days=monthDays(S.month);
-  if(!S.dayPick||!S.dayPick.startsWith(S.month))S.dayPick=days.includes(todayStr())?todayStr():days[0];
-  html+=`<div class="grid2"><div class="panel stack"><h3>عدالة التوزيع</h3>${fair('ph')}${fair('tech')}<p class="muted" style="margin:0;font-size:.82rem">يختار النظام لكل مقعد الأقل حملاً من المؤهلين للوحدة، ويعطي وزناً أكبر لخفارات نهاية الأسبوع، ويترك ${R().minGap} يوم راحة بين الخفارات قدر الإمكان. لا يتجاوز أي موظف ${R().maxHours} ساعة خفارة في الشهر${R().countOt?' (شاملة الإضافي)':''}.</p></div>
-  <div class="panel stack"><div class="row"><h3>سجل التغييرات</h3></div><div class="list">${(m.log||[]).slice(-7).reverse().map(l=>`<div class="it"><time>${new Date(l.t).toLocaleDateString('ar-KW',{day:'numeric',month:'short'})}</time><div>${esc(l.x)}</div></div>`).join('')||'<div class="muted">لا تغييرات</div>'}</div></div></div>`;
-  const vacN=st.vac.reduce((s,v)=>s+v.n,0);
-  if(vacN){const byUnit={};for(const v of st.vac){const k=SCHED[v.sl.sched].short+' · '+unitName(v.sl.unit);byUnit[k]=(byUnit[k]||0)+v.n}
-    html+=`<div class="panel stack" style="border-color:var(--danger)"><h3>${vacN} مقعد شاغر</h3><p class="muted" style="margin:0">لم يجد النظام موظفاً متاحاً دون تجاوز حد ${R().maxHours} ساعة أو الإجازات. الحلول: إضافة موظفين، تأهيل موظفين أكثر لهذه الوحدات، أو تقليل عدد المقاعد من الإعدادات. تقدر تملأ أي شاغر يدوياً من تبويب الجداول.</p><div class="chips">${Object.entries(byUnit).map(([k,n])=>`<span class="chip" style="font-size:.82rem">${esc(k)}: ${n}</span>`).join('')}</div></div>`}
-  if(pend.length)html+=`<div class="panel stack"><h3>تعويضات معلّقة</h3><div class="list">${pend.map(x=>`<div class="it"><div>${esc(pName(x.p))} — عن ${esc(dFull(x.d))} (${esc(slotLabel(slotById(x.s)||{unit:'',start:'00:00',end:'00:00'}))})</div><div class="spacer"></div>${S.canEdit?`<button class="btn small" data-act="retryComp" data-id="${x.id}">محاولة الجدولة</button><button class="btn small" data-act="dropComp" data-id="${x.id}">إلغاء</button>`:''}</div>`).join('')}</div></div>`;
+  if(!m)return html+`<div class="panel empty"><h3>ما فيه جدول لهذا الشهر</h3><p>سجّل الإجازات أول، بعدين اضغط «ولّد جدول الشهر».</p></div></div>`;
+  // alerts only when something needs attention
+  const vacN=st.vac.reduce((s,v)=>s+v.n,0),pend=m.pending||[];
+  const miss=Object.values(m.pinReport||{}).reduce((t,r)=>t+r.miss.length,0);
+  if(vacN)html+=`<div class="alert"><b>${vacN} مقعد ناقص</b><span>ما فيه موظف متاح بدون ما يتعدى ${R().maxHours} ساعة.</span><div class="spacer"></div><button class="btn small" data-act="goto" data-tab="sched">شوفها في الجدول</button></div>`;
+  if(pend.length)html+=`<div class="alert warn"><b>${pend.length} تعويض ما انجدول</b><div class="spacer"></div>${pend.map(x=>`<span class="chip" style="font-size:.82rem">${esc(pName(x.p))} ${S.canEdit?`<button class="btn small" style="padding:0 6px;border:0" data-act="retryComp" data-id="${x.id}">حاول</button>`:''}</span>`).join('')}</div>`;
+  if(miss)html+=`<div class="alert warn"><b>${miss} رغبة ما تحققت</b><span>السبب مكتوب عند كل طلب.</span><div class="spacer"></div><button class="btn small" data-act="goReq" data-type="list">عرض الطلبات</button></div>`;
   // who's on duty
-  const asgD=(st.ix.byDate[S.dayPick]||[]);
-  const groups={};for(const a of asgD)(groups[a.s]||(groups[a.s]=[])).push(a);
-  html+=`<div class="panel"><div class="row"><h3>من في الخفارة؟</h3><div class="spacer"></div><select id="dayPick" aria-label="اختر اليوم">${days.map(d=>`<option value="${d}" ${d===S.dayPick?'selected':''}>${dFull(d)}${S.config.holidays.includes(d)?' (عطلة)':''}</option>`).join('')}</select></div>
-  <div class="dayboard">${slotsFor(S.dayPick).map(sl=>`<div class="blk ${sl.sched}"><h4>${esc(unitName(sl.unit))}</h4><div class="t">${t12(sl.start)} – ${t12(sl.end)} · <span class="pill ${sl.sched}">${SCHED[sl.sched].short}</span></div>${(groups[sl.id]||[]).map(a=>`<div>${esc(pName(a.p))}</div>`).join('')||'<div class="muted">لا أحد</div>'}</div>`).join('')}
-  ${(m.standby&&m.standby[S.dayPick]&&m.standby[S.dayPick].length)?`<div class="blk"><h4>احتياط الإضافي</h4><div class="t">يُستدعى أولاً عند الاعتذار أو المرضي</div>${m.standby[S.dayPick].map(id=>`<div>${esc(pName(id))}</div>`).join('')}</div>`:''}</div></div>`;
+  if(!S.dayPick||!S.dayPick.startsWith(S.month))S.dayPick=days.includes(todayStr())?todayStr():days[0];
+  const groups={};for(const a of(st.ix.byDate[S.dayPick]||[]))(groups[a.s]||(groups[a.s]=[])).push(a);
+  html+=`<div class="panel"><div class="row"><h3>المناوبين يوم</h3><select id="dayPick" aria-label="اختر اليوم">${days.map(d=>`<option value="${d}" ${d===S.dayPick?'selected':''}>${dFull(d)}${S.config.holidays.includes(d)?' (عطلة)':''}</option>`).join('')}</select></div>
+  <div class="dayboard">${slotsFor(S.dayPick).map(sl=>`<div class="blk ${sl.sched}"><h4>${esc(unitName(sl.unit))}</h4><div class="t">${t12(sl.start)} – ${t12(sl.end)}</div>${(groups[sl.id]||[]).map(a=>`<div>${esc(pName(a.p))}</div>`).join('')||'<div class="muted">لا أحد</div>'}</div>`).join('')}
+  ${(m.standby&&m.standby[S.dayPick]&&m.standby[S.dayPick].length)?`<div class="blk"><h4>احتياط الإضافي</h4><div class="t">أول من يُستدعى</div>${m.standby[S.dayPick].map(id=>`<div>${esc(pName(id))}</div>`).join('')}</div>`:''}</div></div>`;
+  // details tucked away
+  const active=S.staff.filter(p=>p.active);
+  const fair=role=>{const d=active.filter(p=>role==='tech'?p.role==='tech':p.role!=='tech').map(p=>stOf(st.ix,p.id).hrs);if(!d.length)return'';
+    return `<div><span class="muted">${role==='tech'?'الفنيون':'الصيادلة'}</span><br><b>${Math.min(...d)}–${Math.max(...d)}</b> <span class="muted">ساعة · المتوسط ${(d.reduce((a,b)=>a+b,0)/d.length).toFixed(1)}</span></div>`};
+  html+=`<details class="more"><summary>تفاصيل التوزيع وسجل التغييرات</summary><div class="stack">
+    <div><h3 style="margin-bottom:6px">ساعات الخفارة للفرد (الحد ${R().maxHours})</h3><div class="fair">${fair('ph')}${fair('tech')}<div><span class="muted">مثبّت حسب الرغبة</span><br><b>${st.pin}</b></div><div><span class="muted">بدلاء</span><br><b>${st.rep}</b></div></div></div>
+    <div><h3 style="margin-bottom:6px">آخر التغييرات</h3><div class="list">${(m.log||[]).slice(-8).reverse().map(l=>`<div class="it"><time>${new Date(l.t).toLocaleDateString('ar-KW',{day:'numeric',month:'short'})}</time><div>${esc(l.x)}</div></div>`).join('')||'<div class="muted">لا تغييرات</div>'}</div></div></div></details>`;
   return html+'</div>';
 }
 function schedDays(sched){return monthDays(S.month).filter(d=>slotsFor(d).some(s=>s.sched===sched))}
@@ -634,7 +651,7 @@ function renderSched(){
   ${m?`<button class="btn small" data-act="copyTsv">نسخ للإكسل</button><button class="btn small" data-act="dlHtml">تنزيل للطباعة</button>`:''}</div>`;
   if(!m)return tabs+`<div class="panel empty" style="margin-top:14px"><h3>لم يُولَّد جدول ${mLabel(S.month)}</h3>${S.canEdit?'<button class="btn primary" data-act="gen">توليد جدول الشهر</button>':''}</div>`;
   return tabs+`<div class="sheet-title">${SCHED[S.sub].name} لشهر ${mLabel(S.month)}${S.sub==='ot'?' · من 2 ظهراً حتى 6 مساءً':''}</div>`+schedTable(S.sub,true)+
-  `<div class="legend"><span><i style="background:var(--wd-soft);box-shadow:inset -3px 0 0 var(--wd)"></i>📌 مثبّت حسب الرغبة</span><span><i style="background:var(--ot-soft);box-shadow:inset -3px 0 0 var(--ot)"></i>بديل (إجازة أو طارئ)</span><span><i style="background:var(--comp-soft);box-shadow:inset -3px 0 0 var(--comp)"></i>خفارة تعويضية</span><span><i style="border:1px dashed var(--danger)"></i>مقعد شاغر</span><span>⚠ أقل من ${R().minGap} يوم راحة</span>${S.canEdit?'<span>اضغط على أي اسم للاستبدال أو تسجيل مرضي</span>':''}</div>`;
+  `<div class="legend"><span><i style="background:var(--wd-soft);box-shadow:inset -3px 0 0 var(--wd)"></i>مثبّت حسب الرغبة</span><span><i style="background:var(--ot-soft);box-shadow:inset -3px 0 0 var(--ot)"></i>بديل</span><span><i style="background:var(--comp-soft);box-shadow:inset -3px 0 0 var(--comp)"></i>تعويض</span><span><i style="border:1px dashed var(--danger)"></i>ناقص</span>${S.canEdit?'<span><b>اضغط على أي اسم</b> لتسجيل غياب أو تغييره</span>':''}</div>`;
 }
 function schedTable(sched,interactive){
   const m=curMonth(),cols=schedColumns(sched),days=schedDays(sched);
@@ -652,7 +669,7 @@ function schedTable(sched,interactive){
       let cell=list.map(a=>{const p=staffById(a.p);const c2=['nm',a.f||'',a.w?'w':'',hlIds&&hlIds.has(a.p)?'hl':''].join(' ');
         const inner=`<span class="pre">${p?ROLE[p.role]:''}</span>${esc(p?p.name:'(محذوف)')}`;
         return interactive&&S.canEdit?`<button class="${c2}" data-act="asg" data-id="${a.id}" title="${a.f==='pin'?'مثبّت حسب رغبة الموظف':a.f==='rep'?'بديل عن '+esc(pName(a.for)):a.f==='comp'?'تعويض — كانت لـ '+esc(pName(a.for)):''}">${inner}</button>`:`<span class="${c2}">${inner}</span>`}).join('');
-      for(const r of['ph','tech']){const miss=(sl[r]||0)-list.filter(a=>a.r===r).length;for(let i=0;i<miss;i++)cell+=interactive&&S.canEdit?`<button class="nm vac" data-act="fill" data-d="${d}" data-s="${sl.id}" data-r="${r}">شاغر · ${r==='tech'?'فني':'صيدلي'}</button>`:`<span class="nm vac">شاغر</span>`}
+      for(const r of['ph','tech']){const miss=(sl[r]||0)-list.filter(a=>a.r===r).length;for(let i=0;i<miss;i++)cell+=interactive&&S.canEdit?`<button class="nm vac" data-act="fill" data-d="${d}" data-s="${sl.id}" data-r="${r}">ناقص ${r==='tech'?'فني':'صيدلي'} · اضغط للتعيين</button>`:`<span class="nm vac">ناقص</span>`}
       h+=`<td>${cell}</td>`;
     }
     if(sched==='ot')h+=`<td>${(m.standby&&m.standby[d]||[]).map(id=>`<span class="nm ${hlIds&&hlIds.has(id)?'hl':''}"><span class="pre">${ROLE[(staffById(id)||{}).role]||''}</span>${esc((staffById(id)||{}).name||'')}</span>`).join('')}</td>`;
@@ -663,60 +680,51 @@ function schedTable(sched,interactive){
 function renderStaff(){
   const st=curMonth()?buildIx(curMonth().asg):{st:{}};
   const q=S.staffQ.trim();
-  const list=S.staff.filter(p=>(!q||p.name.includes(q))&&(!S.staffRole||p.role===S.staffRole));
-  return `<div class="stack"><div class="row"><h2>الموظفون</h2><span class="muted">${S.staff.filter(p=>p.active).length} فعّال من ${S.staff.length}</span><div class="spacer"></div>
+  const list=S.staff.filter(p=>!q||p.name.includes(q));
+  return `<div class="stack"><div class="row"><h2>الموظفون</h2><span class="muted">${S.staff.filter(p=>p.active).length}</span><div class="spacer"></div>
   <input type="search" id="staffQ" placeholder="بحث بالاسم" value="${esc(S.staffQ)}" aria-label="بحث بالاسم">
-  <select id="staffRole" aria-label="الصفة"><option value="">كل الصفات</option>${Object.keys(ROLE).map(k=>`<option value="${k}" ${S.staffRole===k?'selected':''}>${ROLE_NAME[k]}</option>`).join('')}</select>
-  ${S.canEdit?`<button class="btn" data-act="bulk">إضافة قائمة</button><button class="btn primary" data-act="addStaff">إضافة موظف</button>`:''}</div>
-  <div class="tablewrap"><table class="data" style="min-width:880px"><thead><tr><th>الاسم</th><th>الصفة</th><th>الوحدات المؤهل لها</th><th>الإضافي</th><th>ساعات الخفارة</th><th class="num">خفارات</th><th class="num">نهاية أسبوع</th><th class="num">إضافي</th><th></th></tr></thead><tbody>
-  ${list.map(p=>{const s=st.st[p.id]||{duty:0,we:0,ot:0,hrs:0,otHrs:0};const used=s.hrs+(R().countOt?s.otHrs:0),cap=capOf(p);return `<tr class="${p.active?'':'off'}"><td><b style="font-weight:500">${esc(p.name)}</b>${p.active?'':' <span class="pill">موقوف</span>'}</td><td><span class="role ${p.role}">${ROLE[p.role]} ${ROLE_NAME[p.role]}</span></td><td><div class="chips">${p.units.map(u=>`<span class="chip">${esc(unitName(u).replace(/^(الصيدلية|صيدلية|وحدة) /,''))}</span>`).join('')}</div></td><td>${p.ot?'مشارك':'<span class="muted">لا</span>'}</td><td><div class="row" style="gap:6px;flex-wrap:nowrap"><div class="bar ${used>=cap?'full':''}" style="flex:1"><i style="width:${Math.min(100,used/cap*100)}%"></i></div><span class="num" style="font-size:.8rem;white-space:nowrap" dir="ltr">${fmtH(used)} / ${cap}</span></div></td><td class="num">${s.duty}</td><td class="num">${s.we}</td><td class="num">${s.ot}</td><td><div class="row" style="gap:4px;flex-wrap:nowrap"><button class="btn small" data-act="viewStaff" data-id="${p.id}">جدوله</button>${S.canEdit?`<button class="btn small" data-act="editStaff" data-id="${p.id}">تعديل</button>`:''}</div></td></tr>`}).join('')||'<tr><td colspan="9" class="empty">لا يوجد موظفون مطابقون</td></tr>'}
+  ${S.canEdit?`<button class="btn" data-act="bulk">لصق قائمة</button><button class="btn primary" data-act="addStaff">إضافة موظف</button>`:''}</div>
+  <div class="tablewrap"><table class="data" style="min-width:520px"><thead><tr><th>الاسم</th><th>ساعات الخفارة هذا الشهر</th><th></th></tr></thead><tbody>
+  ${list.map(p=>{const s=st.st[p.id]||{hrs:0,otHrs:0};const used=s.hrs+(R().countOt?s.otHrs:0),cap=capOf(p);return `<tr class="${p.active?'':'off'}"><td><span class="role ${p.role}">${ROLE[p.role]}</span> <b style="font-weight:500">${esc(p.name)}</b>${p.active?'':' <span class="pill">موقوف</span>'}</td><td><div class="row" style="gap:8px;flex-wrap:nowrap"><div class="bar ${used>=cap?'full':''}" style="flex:1;max-width:220px"><i style="width:${Math.min(100,used/cap*100)}%"></i></div><span class="num" style="font-size:.8rem;white-space:nowrap" dir="ltr">${fmtH(used)} / ${cap}</span></div></td><td><div class="row" style="gap:4px;flex-wrap:nowrap;justify-content:flex-end"><button class="btn small" data-act="viewStaff" data-id="${p.id}">جدوله</button>${S.canEdit?`<button class="btn small" data-act="editStaff" data-id="${p.id}">تعديل</button>`:''}</div></td></tr>`}).join('')||'<tr><td colspan="3" class="empty">لا يوجد موظفون مطابقون</td></tr>'}
   </tbody></table></div></div>`;
-}
-function renderLeaves(){
-  const m=curMonth();
-  const inM=S.leaves.filter(l=>l.to>=S.month+'-01'&&l.from<=S.month+'-31').sort((a,b)=>a.from<b.from?-1:1);
-  const d0=S.month+'-01';
-  const form=S.canEdit?`<div class="panel stack"><h3>تسجيل إجازة أو طارئ</h3>
-  <div class="row" style="align-items:flex-end">
-   <label class="f" style="flex:2;min-width:200px">الموظف<input type="text" id="lvWho" list="staffList" placeholder="اكتب الاسم"></label>
-   <label class="f">النوع<select id="lvType">${Object.entries(LEAVE).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label>
-   <label class="f">من<input type="date" id="lvFrom" value="${d0}"></label>
-   <label class="f">إلى<input type="date" id="lvTo" value="${d0}"></label>
-  </div>
-  <div class="row"><label class="chk"><input type="checkbox" id="lvComp" checked> تعويض المريض بخفارة أخرى في نفس الشهر</label><input type="text" id="lvNote" placeholder="ملاحظة (اختياري)" style="flex:1;min-width:160px"><button class="btn primary" data-act="addLeave">تسجيل وتحديث الجدول</button></div>
-  <p class="muted" style="margin:0;font-size:.82rem">${m?'عند التسجيل بعد توليد الجدول: تُسحب خفارات الموظف في هذه الفترة ويُعيَّن بديل تلقائياً (للإضافي يُستدعى الاحتياط أولاً). في الإجازة المرضية يُعطى الموظف إحدى خفارات البديل لاحقاً في الشهر تعويضاً.':'سُتراعى هذه الإجازات عند توليد جدول الشهر.'}</p>
-  <datalist id="staffList">${S.staff.filter(p=>p.active).map(p=>`<option value="${esc(p.name)}">${ROLE_NAME[p.role]}</option>`).join('')}</datalist></div>`:'';
-  return `<div class="stack">${form}<div class="panel stack"><div class="row"><h3>إجازات ${mLabel(S.month)}</h3><span class="muted">${inM.length}</span></div>
-  <div class="tablewrap"><table class="data" style="min-width:620px"><thead><tr><th>الموظف</th><th>النوع</th><th>من</th><th>إلى</th><th>ملاحظة</th><th></th></tr></thead><tbody>
-  ${inM.map(l=>`<tr><td>${esc(pName(l.staffId))}</td><td><span class="pill ${l.type==='sick'||l.type==='emergency'?'sick':l.type==='otx'?'ot':''}">${LEAVE[l.type]}</span></td><td class="num">${dFull(l.from)}</td><td class="num">${dFull(l.to)}</td><td class="muted">${esc(l.note)}</td><td>${S.canEdit?`<button class="btn small danger" data-act="delLeave" data-id="${l.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">لا توجد إجازات مسجلة لهذا الشهر</td></tr>'}
-  </tbody></table></div></div></div>`;
 }
 function slotOpt(sl){return `${SCHED[sl.sched].short} · ${unitName(sl.unit)} · ${t12(sl.start)}–${t12(sl.end)}`}
 function timeKeys(unit){const ks=[];for(const sl of S.config.slots)if(!unit||sl.unit===unit){const k=timeKey(sl);if(!ks.includes(k))ks.push(k)}return ks.sort((a,b)=>'we wd ot'.indexOf(a.split('|')[0])-'we wd ot'.indexOf(b.split('|')[0])||(a<b?-1:1))}
-function renderPrefs(){
-  const m=curMonth(),rp=(m&&m.pinReport)||{},days=monthDays(S.month);
-  const rel=S.prefs.filter(pr=>pr.mode!=='dates'||(pr.dates||[]).some(d=>d.startsWith(S.month)));
-  const d0=S.month+'-01';
-  const form=S.canEdit?`<div class="panel stack"><h3>تثبيت موظف في صيدلية أو وقت</h3>
-  <p class="muted" style="margin:0;font-size:.85rem">ثبّت الموظف في صيدلية معينة، أو في وقت معين، أو في الاثنين معاً. يُطبَّق التثبيت أولاً عند توليد الجدول، قبل التوزيع التلقائي، بشرط أن تسمح القواعد: لا إجازة، لا تجاوز لحد ${R().maxHours} ساعة، أيام الراحة، والوردية فيها مكان.</p>
-  <div class="row" style="align-items:flex-end">
-   <label class="f" style="flex:1;min-width:200px">الموظف<input type="text" id="pfWho" list="staffList2" placeholder="اكتب الاسم"></label>
-   <label class="f" style="flex:1;min-width:180px">الصيدلية<select id="pfUnit"><option value="">أي صيدلية</option>${S.config.units.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></label>
-   <label class="f" style="flex:1;min-width:220px">الوقت<select id="pfTime"></select></label>
-  </div>
-  <div class="row"><label class="chk"><input type="radio" name="pfMode" value="dates" checked> أيام محددة</label><label class="chk"><input type="radio" name="pfMode" value="weekdays"> كل أسبوع (يتكرر كل شهر)</label></div>
-  <div id="pfDatesBox" class="row"><input type="date" id="pfDate" value="${d0}"><button class="btn small" data-act="pfAddDate">إضافة اليوم</button><div class="chips" id="pfDates"></div></div>
-  <div id="pfWdBox" class="row" hidden><span class="muted" style="font-size:.85rem">الأيام:</span><span id="pfWds" class="chips"></span><label class="f" style="flex-direction:row;align-items:center;gap:6px">حد أقصى في الشهر<input type="number" id="pfMax" min="0" max="31" placeholder="بلا حد" style="width:90px"></label></div>
-  <div class="row"><input type="text" id="pfNote" placeholder="السبب أو ملاحظة (اختياري)" style="flex:1;min-width:160px"><button class="btn primary" data-act="addPref">إضافة الطلب</button></div>
-  <datalist id="staffList2">${S.staff.filter(p=>p.active).map(p=>`<option value="${esc(p.name)}">${ROLE_NAME[p.role]}</option>`).join('')}</datalist></div>`:'';
-  const rows=rel.map(pr0=>{const pr=normPref(pr0),r=rp[pr.id];
-    const when=pr.mode==='dates'?(pr.dates||[]).filter(d=>d.startsWith(S.month)).map(dFull).join('، '):'كل '+(pr.weekdays||[]).map(w=>DAYS[w]).join(' و')+(pr.max?` · حتى ${pr.max} مرات`:'');
-    let status='<span class="muted">يُطبَّق عند التوليد</span>';
-    if(r){const want=pr.mode==='dates'?r.want:null;
-      status=`<span class="pill ${r.miss.length?'sick':'pin'}">تحقق ${r.ok}${want!==null?' من '+want:''}</span>`+(r.miss.length?`<div class="muted" style="font-size:.78rem;margin-top:3px">${r.miss.slice(0,4).map(x=>`${dShort(x.d)}: ${esc(x.why)}`).join('<br>')}${r.miss.length>4?'<br>…':''}</div>`:'');}
-    return `<tr><td>${esc(pName(pr.staffId))}</td><td>${esc(pr.unit?unitName(pr.unit):'أي صيدلية')}</td><td>${esc(timeLabel(pr.time))}</td><td>${esc(when)}</td><td>${status}</td><td class="muted">${esc(pr.note||'')}</td><td>${S.canEdit?`<button class="btn small danger" data-act="delPref" data-id="${pr.id}">حذف</button>`:''}</td></tr>`}).join('');
-  return `<div class="stack">${form}<div class="panel stack"><div class="row"><h3>طلبات ${mLabel(S.month)}</h3><span class="muted">${rel.length}</span><div class="spacer"></div>${S.canEdit&&m?'<button class="btn small" data-act="gen">إعادة توليد لتطبيق الطلبات</button>':''}</div>
-  <div class="tablewrap"><table class="data" style="min-width:860px"><thead><tr><th>الموظف</th><th>الصيدلية</th><th>الوقت</th><th>الأيام</th><th>الحالة</th><th>ملاحظة</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="7" class="empty">لا توجد طلبات تثبيت لهذا الشهر</td></tr>'}</tbody></table></div></div></div>`;
+const REQ=[['sick','مرضي'],['emergency','طارئ'],['annual','إجازة'],['otx','اعتذار عن الإضافي'],['pin','رغبة تثبيت']];
+const REQ_HINT={sick:'ينشال من خفاراته في هذي الأيام، وينحط بديل تلقائياً، ويتعوّض بخفارة ثانية في نفس الشهر.',emergency:'ينشال من خفاراته وينحط بديل، بدون تعويض.',annual:'ما ينحط في الجدول خلال الإجازة.',otx:'ينشال من الإضافي بس، والخفارات تبقى.',pin:'ثبّت الموظف في صيدلية، أو وقت، أو الاثنين. ينحط أول ما يتولد الجدول إذا سمحت القواعد.'};
+function renderRequests(){
+  const m=curMonth(),rp=(m&&m.pinReport)||{},t=S.reqType==='list'?'sick':S.reqType,d0=S.month+'-01';
+  let form='';
+  if(S.canEdit){
+    form=`<div class="panel stack"><h3>سجّل طلب</h3><div class="seg">${REQ.map(([k,v])=>`<button data-act="reqType" data-type="${k}" aria-pressed="${t===k}">${v}</button>`).join('')}</div>
+    <p class="hint">${REQ_HINT[t]}</p>
+    <div class="row" style="align-items:flex-end"><label class="f" style="flex:1;min-width:200px">الموظف<input type="text" id="rqWho" list="staffList" placeholder="اكتب الاسم"></label>`;
+    if(t!=='pin')form+=`<label class="f">من<input type="date" id="rqFrom" value="${d0}"></label><label class="f">إلى<input type="date" id="rqTo" value="${d0}"></label><button class="btn primary" data-act="addLeave">سجّل</button></div>`;
+    else form+=`<label class="f" style="flex:1;min-width:170px">الصيدلية<select id="pfUnit"><option value="">أي صيدلية</option>${S.config.units.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></label>
+      <label class="f" style="flex:1;min-width:200px">الوقت<select id="pfTime"></select></label></div>
+      <div class="row"><label class="chk"><input type="radio" name="pfMode" value="dates" checked> أيام محددة</label><label class="chk"><input type="radio" name="pfMode" value="weekdays"> كل أسبوع</label></div>
+      <div id="pfDatesBox" class="row"><input type="date" id="pfDate" value="${d0}"><button class="btn small" data-act="pfAddDate">أضف اليوم</button><div class="chips" id="pfDates"></div></div>
+      <div id="pfWdBox" class="row" hidden><span id="pfWds" class="chips"></span><label class="f" style="flex-direction:row;align-items:center;gap:6px">بحد أقصى<input type="number" id="pfMax" min="0" max="31" placeholder="—" style="width:70px">مرات بالشهر</label></div>
+      <div class="row"><button class="btn primary" data-act="addPref">أضف الرغبة</button></div>`;
+    form+=`<datalist id="staffList">${S.staff.filter(p=>p.active).map(p=>`<option value="${esc(p.name)}">${ROLE_NAME[p.role]}</option>`).join('')}</datalist></div>`;
+  }
+  // one combined list
+  const rows=[];
+  for(const l of S.leaves.filter(l=>l.to>=S.month+'-01'&&l.from<=S.month+'-31'))
+    rows.push({k:l.from,who:l.staffId,kind:`<span class="pill ${l.type==='sick'||l.type==='emergency'?'sick':l.type==='otx'?'ot':''}">${LEAVE[l.type]}</span>`,det:l.from===l.to?dFull(l.from):`${dFull(l.from)} ← ${dFull(l.to)}`,st:'',del:`delLeave" data-id="${l.id}`});
+  for(const pr0 of S.prefs.filter(pr=>pr.mode!=='dates'||(pr.dates||[]).some(d=>d.startsWith(S.month)))){
+    const pr=normPref(pr0),r=rp[pr.id];
+    const where=[pr.unit?unitName(pr.unit):'',pr.time?timeLabel(pr.time):''].filter(Boolean).join(' · ')||'أي صيدلية وأي وقت';
+    const when=pr.mode==='dates'?(pr.dates||[]).filter(d=>d.startsWith(S.month)).map(dShort).join('، '):'كل '+(pr.weekdays||[]).map(w=>DAYS[w]).join(' و');
+    let stt='<span class="muted">بعد التوليد</span>';
+    if(r)stt=r.miss.length?`<span class="pill sick">تحقق ${r.ok} من ${r.want}</span><div class="muted" style="font-size:.78rem">${r.miss.slice(0,3).map(x=>`${dShort(x.d)}: ${esc(x.why)}`).join('<br>')}</div>`:`<span class="pill pin">✓ تحقق ${r.ok}</span>`;
+    rows.push({k:'~',who:pr.staffId,kind:'<span class="pill pin">رغبة</span>',det:`${esc(where)}<br><span class="muted">${esc(when)}</span>`,st:stt,del:`delPref" data-id="${pr.id}`});
+  }
+  rows.sort((a,b)=>a.k<b.k?-1:1);
+  return `<div class="stack">${form}<div class="panel stack"><div class="row"><h3>طلبات ${mLabel(S.month)}</h3><span class="muted">${rows.length}</span><div class="spacer"></div>${S.canEdit&&m&&S.prefs.length?'<button class="btn small" data-act="gen">أعد التوليد لتطبيق الرغبات</button>':''}</div>
+  <div class="tablewrap"><table class="data" style="min-width:560px"><thead><tr><th>الموظف</th><th>الطلب</th><th>التفاصيل</th><th>الحالة</th><th></th></tr></thead><tbody>
+  ${rows.map(x=>`<tr><td>${esc(pName(x.who))}</td><td>${x.kind}</td><td>${x.det}</td><td>${x.st}</td><td>${S.canEdit?`<button class="btn small danger" data-act="${x.del}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">ما فيه طلبات لهذا الشهر</td></tr>'}
+  </tbody></table></div></div></div>`;
 }
 function prefUi(){
   const box=$('#pfWds');if(!box)return;
@@ -750,13 +758,14 @@ function renderSettings(){
     <label class="f">أقصى إضافي للفرد شهرياً<input type="number" min="0" max="31" id="rMaxO" value="${c.rules.maxOt}" ${dis}></label>
     <label class="f">احتياط الإضافي يومياً<input type="number" min="0" max="10" id="rSb" value="${c.rules.standby}" ${dis}></label></div>
     <label class="chk" style="align-self:flex-start"><input type="checkbox" id="rCountOt" ${c.rules.countOt?'checked':''} ${dis}> احتساب ساعات الإضافي ضمن الحد</label>
-    <p class="muted" style="margin:0;font-size:.82rem">لا يُكلَّف الموظف بأكثر من مهمة في اليوم، ولا يُوضع في وردية الفجر بعد وردية تنتهي منتصف الليل. حد الساعات لا يُتجاوز أبداً: وردية نهاية الأسبوع 7 ساعات ووردية أيام الأسبوع 4 ساعات. إذا لم يكفِ العدد يخفف النظام قاعدة الراحة ويضع علامة ⚠، وإن بقي نقص يظهر المقعد شاغراً.</p></div>
+    <p class="muted" style="margin:0;font-size:.82rem">وردية نهاية الأسبوع 7 ساعات، وأيام الأسبوع 4 ساعات. الحد ما ينكسر أبداً.</p></div>
   <div class="panel stack"><h3>العطل الرسمية</h3><p class="muted" style="margin:0;font-size:.82rem">تُعامل العطلة كيوم جمعة في جدول نهاية الأسبوع، ولا يُجدول فيها دوام أيام الأسبوع أو الإضافي.</p>
     ${S.canEdit?`<div class="row"><input type="date" id="holDate" value="${S.month}-01"><button class="btn" data-act="addHol">إضافة عطلة</button></div>`:''}
     <div class="chips">${c.holidays.slice().sort().map(h=>`<span class="chip" style="font-size:.85rem;padding:3px 10px">${dFull(h)} ${h.slice(0,4)} ${S.canEdit?`<button class="btn small" style="padding:0 6px;border:0" data-act="delHol" data-d="${h}" aria-label="حذف">×</button>`:''}</span>`).join('')||'<span class="muted">لا توجد عطل مضافة</span>'}</div></div></div>
+  <details class="more"><summary>متقدم: الورديات والصيدليات وعدد الموظفين بكل وردية</summary><div class="stack">
   ${['we','wd','ot'].map(k=>`<div class="panel stack"><div class="row"><h3>${SCHED[k].name}</h3><span class="pill ${k}">${k==='we'?'الجمعة والسبت والعطل':'الأحد – الخميس'}</span><div class="spacer"></div>${S.canEdit?`<button class="btn small" data-act="addSlot" data-sched="${k}">إضافة وردية</button>`:''}</div>
     <div class="tablewrap"><table class="data" style="min-width:720px"><thead><tr><th>الوحدة</th><th>من</th><th>إلى</th><th>صيادلة</th><th>فنيون</th><th>الأيام</th><th></th></tr></thead><tbody>${slotRows(k)}</tbody></table></div></div>`).join('')}
-  <div class="panel stack"><h3>الوحدات</h3><div class="row">${c.units.map(u=>`<input type="text" data-unit="${u.id}" value="${esc(u.name)}" ${dis} style="width:170px" aria-label="اسم الوحدة">`).join('')}${S.canEdit?'<button class="btn small" data-act="addUnit">إضافة وحدة</button>':''}</div></div>
+  <div class="panel stack"><h3>الوحدات</h3><div class="row">${c.units.map(u=>`<input type="text" data-unit="${u.id}" value="${esc(u.name)}" ${dis} style="width:170px" aria-label="اسم الوحدة">`).join('')}${S.canEdit?'<button class="btn small" data-act="addUnit">إضافة وحدة</button>':''}</div></div></div></details>
   ${S.canEdit?`<div class="row"><button class="btn primary" data-act="saveSettings">حفظ الإعدادات</button><span class="muted" style="font-size:.85rem">تطبَّق التعديلات عند توليد الجدول القادم.</span><div class="spacer"></div><button class="btn danger" data-act="startEmpty">مسح كل البيانات والبدء من جديد</button></div>`:''}
   </div>`;
 }
@@ -807,11 +816,11 @@ function asgModal(aid){
   const sl=slotById(a.s),p=staffById(a.p);
   const ix=buildIx(m.asg.filter(x=>x!==a));
   const{list,lv}=candidates(sl,a.d,a.r,ix,()=>0.5,new Set([a.p]));
-  openModal(`<h2>${esc(pName(a.p))}</h2><div class="muted">${dFull(a.d)} · ${esc(slotLabel(sl))} · <span class="pill ${sl.sched}">${SCHED[sl.sched].short}</span>${a.f==='rep'?` · بديل عن ${esc(pName(a.for))}`:''}${a.f==='comp'?` · تعويض (كانت لـ ${esc(pName(a.for))})`:''}</div>
-  <div class="actions"><button class="btn danger" id="amSick">تسجيل مرضي لهذا اليوم</button><button class="btn" id="amEmg">طارئ / اعتذار</button><button class="btn" id="amDel">إزالة من المقعد</button>${a.f==='pin'?'':'<button class="btn" id="amPin">📌 تثبيت هنا</button>'}<button class="btn" id="amView">جدول الموظف</button></div>
-  <div><h3 style="margin-bottom:6px">استبدال يدوي</h3><p class="muted" style="margin:0 0 8px;font-size:.82rem">المتاحون في هذا اليوم مرتبون من الأقل حملاً${lv&&lv.gap<R().minGap?' — تنبيه: لا يوجد متاح مع احترام أيام الراحة':''}.</p>
-  <div class="cand">${list.slice(0,25).map(c=>{const s=stOf(ix,c.p.id);return `<button data-pick="${c.p.id}"><b style="font-weight:500">${esc(pName(c.p.id))}</b><div class="spacer"></div><small>${fmtH(s.hrs)} من ${capOf(c.p)} ساعة · خفارات ${s.duty} · إضافي ${s.ot}</small></button>`}).join('')||'<div class="empty">لا يوجد موظف متاح</div>'}</div></div>
-  <div class="actions"><button class="btn" id="amClose">إغلاق</button></div>`,b=>{
+  openModal(`<h2>${esc(pName(a.p))}</h2><div class="muted">${dFull(a.d)} · ${esc(slotLabel(sl))}${a.f==='rep'?` · بديل عن ${esc(pName(a.for))}`:''}${a.f==='comp'?` · تعويض`:''}</div>
+  <div><h3 style="margin-bottom:8px">غاب؟</h3><div class="actions"><button class="btn danger" id="amSick">مرضي (مع تعويض)</button><button class="btn" id="amEmg">طارئ</button></div></div>
+  <div><h3 style="margin-bottom:6px">أو حط بداله</h3><p class="muted" style="margin:0 0 8px;font-size:.82rem">المتاحين هذا اليوم، الأقل ساعات أول.</p>
+  <div class="cand">${list.slice(0,12).map(c=>{const s=stOf(ix,c.p.id);return `<button data-pick="${c.p.id}"><b style="font-weight:500">${esc(pName(c.p.id))}</b><div class="spacer"></div><small>${fmtH(s.hrs)} من ${capOf(c.p)} ساعة</small></button>`}).join('')||'<div class="empty">ما فيه أحد متاح</div>'}</div></div>
+  <div class="actions" style="border-top:1px solid var(--line);padding-top:12px">${a.f==='pin'?'':'<button class="btn small" id="amPin">تثبيت هنا</button>'}<button class="btn small" id="amView">جدول الموظف</button><button class="btn small" id="amDel">شيله من الجدول</button><div class="spacer"></div><button class="btn" id="amClose">إغلاق</button></div>`,b=>{
     $('#amClose',b).onclick=closeModal;
     $('#amView',b).onclick=()=>viewStaff(a.p);
     const pinB=$('#amPin',b);if(pinB)pinB.onclick=()=>{S.prefs.push({id:uid(),staffId:a.p,unit:sl.unit,time:timeKey(sl),mode:'dates',dates:[a.d],note:'تثبيت من الجدول'});a.f='pin';delete a.for;addLog(m,`تثبيت ${pName(a.p)} في ${slotLabel(sl)} يوم ${dFull(a.d)}`);closeModal();save('prefs','month');render();toast('ثُبّت الموظف، ولن يتغير عند إعادة التوليد')};
@@ -899,6 +908,7 @@ async function dlHtml(){
 }
 
 /* ============ events ============ */
+$('#gearBtn').onclick=()=>{S.tab='settings';render()};
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.tab=b.dataset.tab;try{localStorage.setItem('munawib:tab',S.tab)}catch(x){}render()});
 $('#mPrev').onclick=async()=>{S.month=shiftMonth(S.month,-1);await ensureMonth();render()};
 $('#mNext').onclick=async()=>{S.month=shiftMonth(S.month,1);await ensureMonth();render()};
@@ -933,6 +943,8 @@ document.addEventListener('click',e=>{
   else if(a==='pfAddDate'){const d=$('#pfDate').value;if(d){S._pfDates=[...new Set([...(S._pfDates||[]),d])].sort();prefUi()}}
   else if(a==='pfDelDate'){S._pfDates=(S._pfDates||[]).filter(x=>x!==b.dataset.d);prefUi()}
   else if(a==='addPref')addPref();
+  else if(a==='goReq'){S.tab='req';S.reqType=b.dataset.type;render();const w=$('#rqWho');if(w&&S.reqType!=='list')w.focus()}
+  else if(a==='reqType'){const who=($('#rqWho')||{}).value;S.reqType=b.dataset.type;render();if(who&&$('#rqWho'))$('#rqWho').value=who}
   else if(a==='delPref'){S.prefs=S.prefs.filter(p=>p.id!==id);save('prefs');render();toast('حُذف الطلب. يبقى الجدول الحالي كما هو حتى إعادة التوليد')}
 });
 document.addEventListener('input',e=>{
@@ -958,28 +970,28 @@ function saveSettings(){
   save('config');render();toast('حُفظت الإعدادات. أعد توليد الجدول لتطبيقها');
 }
 function addPref(){
-  const name=$('#pfWho').value.trim(),p=S.staff.find(x=>x.name===name);
+  const name=$('#rqWho').value.trim(),p=S.staff.find(x=>x.name===name);
   if(!p){toast('اختر الموظف من القائمة المقترحة');return}
   const unit=$('#pfUnit').value,time=$('#pfTime').value,mode=document.querySelector('input[name=pfMode]:checked').value;
   if(unit&&!p.units.includes(unit)){toast(`${p.name} غير مؤهل لـ ${unitName(unit)}. عدّل وحداته من تبويب الموظفين أولاً`);return}
-  const pr={id:uid(),staffId:p.id,unit,time,mode,note:$('#pfNote').value.trim()};
+  const pr={id:uid(),staffId:p.id,unit,time,mode,note:''};
   const role=p.role==='tech'?'tech':'ph';
   if(!S.config.slots.some(sl=>(!unit||sl.unit===unit)&&(!time||timeKey(sl)===time)&&(sl[role]||0)>0&&p.units.includes(sl.unit))){toast('لا توجد وردية بهذا الوقت في هذه الصيدلية تناسب صفة الموظف');return}
   if(mode==='dates'){const ds=S._pfDates||[];if(!ds.length){toast('أضف يوماً واحداً على الأقل');return}
     const bad=ds.filter(d=>!prefSlots(pr,d).length);if(bad.length){toast(`لا توجد وردية مطابقة يوم ${bad.map(dFull).join('، ')}`);return}pr.dates=ds}
   else{pr.weekdays=[...document.querySelectorAll('.pfW:checked')].map(x=>+x.value);if(!pr.weekdays.length){toast('اختر يوماً من أيام الأسبوع');return}pr.max=+$('#pfMax').value||0}
   S.prefs.push(pr);S._pfDates=[];save('prefs');render();
-  toast(curMonth()?'أُضيف الطلب. أعد توليد الجدول لتطبيقه':'أُضيف الطلب وسيُطبَّق عند التوليد');
+  toast(curMonth()?'انضافت الرغبة. اضغط «أعد التوليد» عشان تنطبق':'انضافت الرغبة وبتنطبق وقت التوليد');
 }
 function addLeave(){
-  const name=$('#lvWho').value.trim(),p=S.staff.find(x=>x.name===name);
-  if(!p){toast('اختر الموظف من القائمة المقترحة');return}
-  const type=$('#lvType').value,from=$('#lvFrom').value,to=$('#lvTo').value;
-  if(!from||!to||to<from){toast('تاريخ النهاية يجب أن يكون بعد تاريخ البداية');return}
-  S.leaves.push({id:uid(),staffId:p.id,type,from,to,note:$('#lvNote').value.trim()});
-  let msg=`سُجّلت ${LEAVE[type]} لـ ${p.name}`;
+  const name=$('#rqWho').value.trim(),p=S.staff.find(x=>x.name===name);
+  if(!p){toast('اختر الموظف من القائمة');return}
+  const type=S.reqType,from=$('#rqFrom').value,to=$('#rqTo').value;
+  if(!from||!to||to<from){toast('تاريخ «إلى» لازم يكون بعد «من»');return}
+  S.leaves.push({id:uid(),staffId:p.id,type,from,to,note:''});
+  let msg=`انسجلت ${LEAVE[type]} لـ ${p.name}`;
   if(curMonth()&&from<=S.month+'-31'&&to>=S.month+'-01'){
-    const r=vacate(p.id,from,to,type==='otx'?['ot']:['we','wd','ot'],type==='sick'&&$('#lvComp').checked,LEAVE[type]);
+    const r=vacate(p.id,from,to,type==='otx'?['ot']:['we','wd','ot'],type==='sick',LEAVE[type]);
     msg+=' · '+resultMsg(r);save('leaves','month');
   }else save('leaves');
   render();toast(msg);
